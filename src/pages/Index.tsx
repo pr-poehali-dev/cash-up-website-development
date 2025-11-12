@@ -4,11 +4,13 @@ import { Card } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Icon from '@/components/ui/icon';
+import LoanApplicationForm from '@/components/LoanApplicationForm';
 
 const Index = () => {
   const [loanAmount, setLoanAmount] = useState([15000]);
   const [loanTerm, setLoanTerm] = useState([14]);
   const [activeSection, setActiveSection] = useState('home');
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
 
   const interestRate = 0.01;
   const totalAmount = loanAmount[0] + (loanAmount[0] * interestRate * loanTerm[0]);
@@ -41,7 +43,10 @@ const Index = () => {
               </button>
             ))}
           </div>
-          <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90">
+          <Button 
+            onClick={() => setShowApplicationForm(true)}
+            className="bg-gradient-to-r from-primary to-secondary hover:opacity-90"
+          >
             Получить займ
           </Button>
         </div>
@@ -61,11 +66,20 @@ const Index = () => {
                 Онлайн займы до 30 000 ₽ без отказа. Быстрое одобрение, минимум документов, деньги на карту.
               </p>
               <div className="flex gap-4">
-                <Button size="lg" className="bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 text-lg px-8">
+                <Button 
+                  size="lg" 
+                  onClick={() => setShowApplicationForm(true)}
+                  className="bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 text-lg px-8"
+                >
                   Оформить займ
                   <Icon name="ArrowRight" className="ml-2" size={20} />
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="text-lg"
+                  onClick={() => scrollToSection('главная')}
+                >
                   Калькулятор
                 </Button>
               </div>
@@ -138,7 +152,11 @@ const Index = () => {
                   </div>
                 </div>
 
-                <Button className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90" size="lg">
+                <Button 
+                  className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90" 
+                  size="lg"
+                  onClick={() => setShowApplicationForm(true)}
+                >
                   Получить деньги
                   <Icon name="Rocket" className="ml-2" size={20} />
                 </Button>
@@ -181,7 +199,13 @@ const Index = () => {
                     <span>Без отказа</span>
                   </div>
                 </div>
-                <Button className="w-full" variant="outline">Оформить</Button>
+                <Button 
+                  className="w-full" 
+                  variant="outline"
+                  onClick={() => setShowApplicationForm(true)}
+                >
+                  Оформить
+                </Button>
               </Card>
             ))}
           </div>
@@ -354,6 +378,10 @@ const Index = () => {
           </div>
         </div>
       </footer>
+
+      {showApplicationForm && (
+        <LoanApplicationForm onClose={() => setShowApplicationForm(false)} />
+      )}
     </div>
   );
 };
